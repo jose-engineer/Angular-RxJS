@@ -25,11 +25,11 @@ export class ProductService {
     this.products$,
     this.productCategoryService.productCategories$
   ]).pipe(
-    map(([products, categories]) =>
+    map(([products, categories]) => // javascript destructuring
       products.map(product => ({
         ...product,
         price: product.price ? product.price * 1.5 : 0,
-        category: categories.find(c => product.categoryId === c.id)?.name,
+        category: categories.find(c => product.categoryId === c.id)?.name, // ? - Optional chaining operator
         searchKey: [product.productName]
       } as Product))
     ),
