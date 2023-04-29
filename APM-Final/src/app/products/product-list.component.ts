@@ -17,9 +17,10 @@ export class ProductListComponent {
   private categorySelectedSubject = new BehaviorSubject<number>(0);
   categorySelectedAction$ = this.categorySelectedSubject.asObservable();
 
-  products$ = combineLatest([
-    this.productService.productsWithAdd$,
-    this.categorySelectedAction$
+   products$ = combineLatest([//emits after both observables have emitted, and then again each time the action stream emits, combine data plus the latest action info
+  //when combineLates emits, it refires the downstream pipeline, so if the pipeline filters the data it will perform the filter again
+    this.productService.productsWithAdd$, // [ [{p1},{p2},{p3}],
+    this.categorySelectedAction$ // garden ]
   ])
     .pipe(
       map(([products, selectedCategoryId]) =>
