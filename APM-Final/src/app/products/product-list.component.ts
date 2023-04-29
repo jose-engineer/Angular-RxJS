@@ -57,6 +57,6 @@ export class ProductListComponent {
   }
 
   onSelected(categoryId: string): void {
-    this.categorySelectedSubject.next(+categoryId);
+    this.categorySelectedSubject.next(+categoryId); // use plus sign to cast to a number, so the === match the value
   }
 }
