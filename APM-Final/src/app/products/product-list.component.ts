@@ -24,7 +24,7 @@ export class ProductListComponent {
     .pipe(
       map(([products, selectedCategoryId]) =>
         products.filter(product =>
-          selectedCategoryId ? product.categoryId === selectedCategoryId : true
+          selectedCategoryId ? product.categoryId === selectedCategoryId : true //if no match, return true to return all products
         )),
       catchError(err => {
         this.errorMessageSubject.next(err);
