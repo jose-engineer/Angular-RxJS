@@ -14,13 +14,14 @@ export class ProductListComponent {
   private errorMessageSubject = new Subject<string>();
   errorMessage$ = this.errorMessageSubject.asObservable();
 
-  private categorySelectedSubject = new BehaviorSubject<number>(0);
-  categorySelectedAction$ = this.categorySelectedSubject.asObservable();
+  private categorySelectedSubject = new BehaviorSubject<number>(0); // private to not expose to external world if it is in a service, use to call the next method
+  categorySelectedAction$ = this.categorySelectedSubject.asObservable(); // variable to expose and subscribe
 
    products$ = combineLatest([//emits after both observables have emitted, and then again each time the action stream emits, combine data plus the latest action info
   //when combineLates emits, it refires the downstream pipeline, so if the pipeline filters the data it will perform the filter again
     this.productService.productsWithAdd$, // [ [{p1},{p2},{p3}],
     this.categorySelectedAction$ // garden ]
+    //.pipe( startWith(0) )
   ])
     .pipe(
       map(([products, selectedCategoryId]) =>
@@ -59,5 +60,6 @@ export class ProductListComponent {
 
   onSelected(categoryId: string): void {
     this.categorySelectedSubject.next(+categoryId); // use plus sign to cast to a number, so the === match the value
+    //emits everytime user makes a selection
   }
 }
