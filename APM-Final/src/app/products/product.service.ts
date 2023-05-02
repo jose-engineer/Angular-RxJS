@@ -93,8 +93,9 @@ export class ProductService {
     this.productInsertedSubject.next(newProduct);
   }
 
-  selectedProductChanged(selectedProductId: number): void {
-    this.productSelectedSubject.next(selectedProductId);
+  selectedProductChanged(selectedProductId: number): void { // We can call this method from anywhere in the app
+    this.productSelectedSubject.next(selectedProductId); //Every time this method is called, the selectedProductId is emitted into the productSelectedAction stream.
+    //The combineLatest then emits and our pipeline is re‑executed.
   }
 
   private fakeProduct(): Product {

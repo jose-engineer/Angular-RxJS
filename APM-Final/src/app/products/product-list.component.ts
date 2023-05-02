@@ -7,7 +7,7 @@ import { ProductService } from './product.service';
 @Component({
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush // because we are binding to Observables
 })
 export class ProductListComponent {
   pageTitle = 'Product List';
