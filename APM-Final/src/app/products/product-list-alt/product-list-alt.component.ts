@@ -6,7 +6,7 @@ import { ProductService } from '../product.service';
 @Component({
   selector: 'pm-product-list',
   templateUrl: './product-list-alt.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush // because we are binding to Observables
+  changeDetection: ChangeDetectionStrategy.OnPush // because we are binding to Observables, detects changes to observables bound in the template using async pipe
 })
 export class ProductListAltComponent {
   pageTitle = 'Products';
@@ -16,7 +16,7 @@ export class ProductListAltComponent {
   products$ = this.productService.productsWithCategory$
     .pipe(
       catchError(err => {
-        this.errorMessageSubject.next(err);
+        this.errorMessageSubject.next(err); // set a value into a subject stream
         return EMPTY;
       })
     );
@@ -35,6 +35,6 @@ export class ProductListAltComponent {
   constructor(private productService: ProductService) { }
 
   onSelected(productId: number): void {
-    this.productService.selectedProductChanged(productId);
+    this.productService.selectedProductChanged(productId); // you called the a centralized emiter
   }
 }
