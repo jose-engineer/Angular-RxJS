@@ -55,7 +55,7 @@ export class ProductListComponent {
               private productCategoryService: ProductCategoryService) { }
 
   onAdd(): void {
-    this.productService.addProduct();
+    this.productService.addProduct(); // You don't pass a product because we are using a fake one on product.service.ts
   }
 
   onSelected(categoryId: string): void {
