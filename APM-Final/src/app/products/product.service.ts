@@ -80,8 +80,11 @@ export class ProductService {
     this.productsWithCategory$,
     this.productInsertedAction$
   ).pipe(
-    scan((acc, value) =>
-      (value instanceof Array) ? [...value] : [...acc, value], [] as Product[])
+    scan((acc, value) => // Accumulator function
+      (value instanceof Array) ? // If emitted product is an array
+         [...value] : // set the accumulator to a copy of the initial set of products, creates a copy using spread array syntax
+         [...acc, value], // If not an array is a new product from the inserted action stream, so we create a copy and push the new product to the current accumulator array (creating a new accumulator), this new accumulator is buffered by the scan operator
+         [] as Product[]) // seed value (empty array) as first accumulator, used for strong typing to be sure that the accumulator is set up as a product array
   )
 
   constructor(private http: HttpClient,
