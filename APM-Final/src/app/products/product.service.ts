@@ -76,7 +76,7 @@ export class ProductService {
   private productInsertedSubject = new Subject<Product>();
   productInsertedAction$ = this.productInsertedSubject.asObservable();
 
-  productsWithAdd$ = merge(
+  productsWithAdd$ = merge( // use this new observable in the combineLatest operator
     this.productsWithCategory$,
     this.productInsertedAction$
   ).pipe(
