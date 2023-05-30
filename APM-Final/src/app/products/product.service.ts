@@ -73,8 +73,8 @@ export class ProductService {
       tap(suppliers => console.log('product suppliers', JSON.stringify(suppliers)))
     );
 
-  private productInsertedSubject = new Subject<Product>();
-  productInsertedAction$ = this.productInsertedSubject.asObservable();
+  private productInsertedSubject = new Subject<Product>(); // Creates an action stream
+  productInsertedAction$ = this.productInsertedSubject.asObservable(); // exposes the action stream
 
   productsWithAdd$ = merge( // use this new observable in the combineLatest operator
     this.productsWithCategory$, // Data stream
