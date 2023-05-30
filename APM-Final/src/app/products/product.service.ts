@@ -77,10 +77,10 @@ export class ProductService {
   productInsertedAction$ = this.productInsertedSubject.asObservable();
 
   productsWithAdd$ = merge( // use this new observable in the combineLatest operator
-    this.productsWithCategory$,
-    this.productInsertedAction$
+    this.productsWithCategory$, // Data stream
+    this.productInsertedAction$ // Action stream
   ).pipe(
-    scan((acc, value) => // Accumulator function
+    scan((acc, value) => // Accumulator function, emitting new array triggers change detection, when a user adds a new item we react to the add operation by emmiting a new array
       (value instanceof Array) ? // If emitted product is an array
          [...value] : // set the accumulator to a copy of the initial set of products, creates a copy using spread array syntax
          [...acc, value], // If not an array is a new product from the inserted action stream, so we create a copy and push the new product to the current accumulator array (creating a new accumulator), this new accumulator is buffered by the scan operator
