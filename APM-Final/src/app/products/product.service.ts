@@ -72,8 +72,13 @@ export class ProductService {
       }),
       tap(suppliers => console.log('product suppliers', JSON.stringify(suppliers)))
     );
+  
+  // Three steps to react to an action:
+  // 1.- Create Action stream (Subject)
+  // 2.- Combine (merge) Action and Data streams
+  // 3.- Emit a value to the action  
 
-  private productInsertedSubject = new Subject<Product>(); // Creates an action stream
+  private productInsertedSubject = new Subject<Product>(); // Creates an action stream, since we want to emit a new product into the stream we define a Subject of product
   productInsertedAction$ = this.productInsertedSubject.asObservable(); // exposes the action stream
 
   productsWithAdd$ = merge( // use this new observable in the combineLatest operator
@@ -95,12 +100,7 @@ export class ProductService {
     newProduct = newProduct || this.fakeProduct();
     this.productInsertedSubject.next(newProduct);
   }
-  
-  // Three steps to react to an action:
-  // 1.- Create Action stream (Subject)
-  // 2.- Combine (merge) Action and Data streams
-  // 3.- Emit a value to the action
-  
+   
   selectedProductChanged(selectedProductId: number): void { // We can call this method from anywhere in the app
     this.productSelectedSubject.next(selectedProductId); //Every time this method is called, the selectedProductId is emitted into the productSelectedAction stream.
     //The combineLatest then emits and our pipeline is re‑executed.
