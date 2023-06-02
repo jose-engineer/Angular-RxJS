@@ -33,7 +33,7 @@ export class ProductService {
         searchKey: [product.productName]
       } as Product))
     ),
-    shareReplay(1)
+    shareReplay(1)  // Caching products array
   );
 
   private productSelectedSubject = new BehaviorSubject<number>(0);
